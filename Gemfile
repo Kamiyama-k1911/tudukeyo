@@ -9,6 +9,8 @@ gem "devise_token_auth"
 gem "mysql2", ">= 0.4.4"
 gem "puma", "~> 4.1"
 gem "rails", "~> 6.0.3", ">= 6.0.3.4"
+gem 'carrierwave', '~> 2.0'
+gem 'mini_magick'
 
 group :development, :test do
   gem "factory_bot_rails"
