@@ -1,0 +1,8 @@
+test:
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: 5
+  database: daily-report-api_test
+  username: root
+  password: root
+  host: 127.0.0.1
