@@ -5,4 +5,4 @@ test:
   database: daily-report-api_test
   username: root
   password: root
-  host: localhost
+  host: 127.0.0.1
