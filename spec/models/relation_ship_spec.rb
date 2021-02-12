@@ -8,7 +8,7 @@
 #  followed_id :integer          not null
 #  follower_id :integer          not null
 #
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe RelationShip, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
