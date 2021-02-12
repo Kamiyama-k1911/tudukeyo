@@ -38,4 +38,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
+
+  has_many :habits, dependent: :destroy
+  has_many :tweets, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :follower,class_name: "RelationShip",foreign_key: "follower_id",dependent: :destroy
+  has_many :followed,class_name: "RelationShip",foreign_key: "followed_id",dependent: :destroy
+  has_many :follower_user,through: :followed, source: :follower
+  has_many :following_user, through: :follower, source: :followed
 end
