@@ -22,5 +22,39 @@
 require "rails_helper"
 
 RSpec.describe Comment, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let!(:comment) { build(:comment) }
+
+  describe "正常系" do
+    it "コメントを投稿できる" do
+      expect(comment).to be_valid
+    end
+
+    context "コメントが200文字の時" do
+      it "投稿できる" do
+        comment.content = "a" * 200
+
+        expect(comment).to be_valid
+      end
+    end
+  end
+
+  describe "異常系" do
+    context "コメント内容が空だった時" do
+      it "投稿できない" do
+        comment.content = nil
+
+        expect(comment).to be_invalid
+        expect(comment.errors.details[:content][0][:error]).to eq :blank
+      end
+    end
+
+    context "コメントが201文字以上の時" do
+      it "投稿できない" do
+        comment.content = "a" * 201
+
+        expect(comment).to be_invalid
+        expect(comment.errors.details[:content][0][:error]).to eq :too_long
+      end
+    end
+  end
 end

@@ -20,5 +20,18 @@
 require "rails_helper"
 
 RSpec.describe HabitAction, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let!(:habit_action) { build(:habit_action) }
+
+  it "アクションを作成できる" do
+    expect(habit_action).to be_valid
+  end
+
+  context "名前が空だった時" do
+    it "アクションが作成できない" do
+      habit_action.name = nil
+
+      expect(habit_action).to be_invalid
+      expect(habit_action.errors.details[:name][0][:error]).to eq :blank
+    end
+  end
 end
