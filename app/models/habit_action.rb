@@ -20,5 +20,5 @@
 class HabitAction < ApplicationRecord
   belongs_to :habit
 
-  validates :name,presence: true
+  validates :name, presence: true
 end

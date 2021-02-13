@@ -35,5 +35,4 @@ RSpec.describe Habit, type: :model do
       expect(habit.errors.details[:name][0][:error]).to eq :blank
     end
   end
-
 end

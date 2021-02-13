@@ -32,7 +32,6 @@ RSpec.describe User, type: :model do
       end
     end
 
-
     context "プロフィールが300文字の時" do
       it "ユーザー登録できる" do
         user.profile = "a" * 300
@@ -71,7 +70,7 @@ RSpec.describe User, type: :model do
     end
 
     context "既に同じメールアドレスが登録されている時" do
-      before { create(:user,email: "aaa@example.com") }
+      before { create(:user, email: "aaa@example.com") }
 
       it "ユーザー登録できない" do
         user.email = "aaa@example.com"
@@ -136,15 +135,6 @@ RSpec.describe User, type: :model do
     end
 
     context "プロフィールが301文字の時" do
-      it "ユーザー登録できない" do
-        user.profile = "a" * 301
-
-        expect(user).to be_invalid
-        expect(user.errors.details[:profile][0][:error]).to eq :too_long
-      end
-    end
-
-    context "プロフィールが300文字以上の時" do
       it "ユーザー登録できない" do
         user.profile = "a" * 301
 

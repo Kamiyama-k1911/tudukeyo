@@ -26,5 +26,4 @@ RSpec.describe Like, type: :model do
   it "いいねできる" do
     expect(like).to be_valid
   end
-
 end

@@ -10,6 +10,5 @@
 #
 require "rails_helper"
 
-RSpec.describe RelationShip, type: :model do
-
-end
+# RSpec.describe RelationShip, type: :model do
+# end
