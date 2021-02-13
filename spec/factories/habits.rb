@@ -20,8 +20,8 @@
 #
 FactoryBot.define do
   factory :habit do
-    user { nil }
-    name { "MyString" }
+    user
+    name { Faker::Name.name }
     continution_day { 1 }
     goal_day { 1 }
   end

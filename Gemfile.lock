@@ -272,6 +272,7 @@ DEPENDENCIES
   annotate
   bootsnap (>= 1.4.2)
   carrierwave (~> 2.0)
+  devise
   devise_token_auth
   factory_bot_rails
   faker

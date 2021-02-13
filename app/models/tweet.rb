@@ -23,4 +23,6 @@ class Tweet < ApplicationRecord
   has_many :habits, dependent: :destroy
   has_many :tags, dependent: :destroy
   has_many :tweet_tags, dependent: :destroy
+
+  validates :content, presence: true, length: { maximum: 200 }
 end

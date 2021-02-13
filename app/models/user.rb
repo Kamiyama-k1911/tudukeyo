@@ -47,4 +47,7 @@ class User < ApplicationRecord
   has_many :followed, class_name: "RelationShip", foreign_key: "followed_id", dependent: :destroy, inverse_of: :user
   has_many :follower_user, through: :followed, source: :follower
   has_many :following_user, through: :follower, source: :followed
+
+  validates :name, presence: true, length: { maximum: 25 }
+  validates :profile, length: { maximum: 300 }
 end

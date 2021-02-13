@@ -19,5 +19,18 @@
 require "rails_helper"
 
 RSpec.describe Tag, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let!(:tag) { build(:tag) }
+
+  it "タグを作成できる" do
+    expect(tag).to be_valid
+  end
+
+  context "名前が空だった時" do
+    it "タグを作成できない" do
+      tag.name = nil
+
+      expect(tag).to be_invalid
+      expect(tag.errors.details[:name][0][:error]).to eq :blank
+    end
+  end
 end

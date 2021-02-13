@@ -21,5 +21,9 @@
 require "rails_helper"
 
 RSpec.describe TweetTag, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let!(:tweet_tag) { build(:tweet_tag) }
+
+  it "タグ管理できる" do
+    expect(tweet_tag).to be_valid
+  end
 end
