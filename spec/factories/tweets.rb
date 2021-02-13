@@ -18,7 +18,7 @@
 #
 FactoryBot.define do
   factory :tweet do
-    user { nil }
-    content { "MyString" }
+    content { Faker::Lorem.sentence }
+    user
   end
 end

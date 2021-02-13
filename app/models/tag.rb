@@ -19,4 +19,6 @@
 class Tag < ApplicationRecord
   belongs_to :tweet
   has_many :tweet_tags, dependent: :destroy
+
+  validates :name, presence: true
 end

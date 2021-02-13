@@ -21,8 +21,8 @@
 #
 FactoryBot.define do
   factory :comment do
-    user { nil }
-    tweet { nil }
-    content { "MyString" }
+    user
+    tweet
+    content { Faker::Lorem.sentence }
   end
 end

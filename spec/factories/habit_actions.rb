@@ -19,8 +19,8 @@
 #
 FactoryBot.define do
   factory :habit_action do
-    habit { nil }
-    name { "MyString" }
+    habit
+    name { Faker::Lorem.word }
     is_done { false }
   end
 end

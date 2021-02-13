@@ -18,7 +18,7 @@
 #
 FactoryBot.define do
   factory :tag do
-    name { "MyString" }
-    tweet { nil }
+    name { Faker::Lorem.word }
+    tweet
   end
 end
