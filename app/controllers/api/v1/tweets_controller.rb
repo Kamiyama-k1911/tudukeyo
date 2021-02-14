@@ -14,6 +14,12 @@ class Api::V1::TweetsController < Api::V1::BaseApiController
     render json: tweet
   end
 
+  def destroy
+    tweet = current_user.tweets.find(params[:id])
+    tweet.destroy!
+    render json: tweet
+  end
+
   private
   def tweet_param
     params.require(:tweet).permit(:content)

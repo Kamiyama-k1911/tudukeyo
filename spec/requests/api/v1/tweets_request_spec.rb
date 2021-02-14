@@ -72,4 +72,36 @@ RSpec.describe "Api::V1::Tweets", type: :request do
       end
     end
   end
+
+  describe "DELETE api/v1/tweets/:id" do
+    subject { delete(api_v1_tweet_path(tweet_id)) }
+
+    before { allow_any_instance_of(Api::V1::BaseApiController).to receive(:current_user).and_return(current_user) }
+
+    let!(:tweet) { create(:tweet,user_id: current_user_id) }
+    let!(:tweet_id) { tweet.id }
+    let!(:current_user) { create(:user) }
+    let!(:current_user_id) { current_user.id }
+
+    it "ツイートを削除できる" do
+      expect{ subject }.to change{ Tweet.where(user_id: current_user_id).count }.by(-1)
+
+      res = JSON.parse(response.body)
+      expect(res["id"]).to eq tweet_id
+      expect(res["content"]).to eq tweet.content
+      expect(res["created_at"]).to be_present
+      expect(response).to have_http_status :ok
+    end
+
+    context "自分以外のユーザーのツイートを削除しようとした時" do
+      subject { delete(api_v1_tweet_path(other_tweet.id)) }
+
+      let!(:other_user) { create(:user) }
+      let!(:other_tweet) { create(:tweet,user: other_user)}
+
+      it "ツイートを削除できない" do
+        expect{ subject }.to raise_error ActiveRecord::RecordNotFound
+      end
+    end
+  end
 end
