@@ -23,6 +23,7 @@ RSpec/EmptyLineAfterFinalLet:
 # ヒアドキュメント使うと一瞬で超えるので disable も検討。
 RSpec/ExampleLength:
   Max: 8
+  Enabled: false
 
 # block の方がテスト対象が
 # * `{}` の前後のスペースと相まって目立つ
@@ -71,4 +72,7 @@ RSpec/NestedGroups:
 # ブロックは初見だと返り値を書いていると気づけないので and_return にしたいが、
 # ブロックの方が見た目がスッキリして見やすいので、どちらでもお好きにどうぞ。
 RSpec/ReturnFromStub:
+  Enabled: false
+
+RSpec/AnyInstance:
   Enabled: false
