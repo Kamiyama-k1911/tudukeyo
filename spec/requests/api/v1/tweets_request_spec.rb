@@ -48,4 +48,28 @@ RSpec.describe "Api::V1::Tweets", type: :request do
     end
   end
 
+ describe "POST api/v1/tweets" do
+    subject { post(api_v1_tweets_path(params: params)) }
+
+    before { allow_any_instance_of(Api::V1::BaseApiController).to receive(:current_user).and_return(current_user) }
+
+    let!(:params) { { tweet: attributes_for(:tweet)} }
+    let!(:current_user) { create(:user) }
+    it "ツイートできる" do
+      expect{ subject }.to change{ Tweet.where(user_id: current_user.id).count }.by(1)
+
+      res = JSON.parse(response.body)
+
+      expect(res["content"]).to eq params[:tweet][:content]
+      expect(response).to have_http_status :ok
+    end
+
+    context "パラメーターの渡し方が間違っていた時" do
+      let!(:params) { attributes_for(:tweet) }
+
+      it "ツイートを作成できない" do
+        expect{ subject }.to raise_error ActionController::ParameterMissing
+      end
+    end
+  end
 end
