@@ -6,11 +6,13 @@ ruby "2.7.2"
 gem "active_model_serializers", "~> 0.10.0"
 gem "bootsnap", ">= 1.4.2", require: false
 gem "carrierwave", "~> 2.0"
+gem "config"
 gem "devise"
 gem "devise_token_auth"
 gem "mini_magick"
 gem "mysql2", ">= 0.4.4"
 gem "puma", "~> 4.1"
+gem "rack-cors"
 gem "rails", "~> 6.0.3", ">= 6.0.3.4"
 
 group :development, :test do
