@@ -10,7 +10,7 @@ class Api::V1::TweetsController < Api::V1::BaseApiController
   end
 
   def create
-    tweet = current_user.tweets.create(tweet_param)
+    tweet = current_user.tweets.create!(tweet_param)
     render json: tweet
   end
 
@@ -21,7 +21,8 @@ class Api::V1::TweetsController < Api::V1::BaseApiController
   end
 
   private
-  def tweet_param
-    params.require(:tweet).permit(:content)
-  end
+
+    def tweet_param
+      params.require(:tweet).permit(:content)
+    end
 end
