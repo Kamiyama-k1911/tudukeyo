@@ -21,4 +21,31 @@ RSpec.describe "Api::V1::Tweets", type: :request do
       expect(response).to have_http_status :ok
     end
   end
+
+  describe "GET api/v1/tweets/:id" do
+    subject { get(api_v1_tweet_path(tweet_id)) }
+
+    let!(:tweet) { create(:tweet) }
+    let!(:tweet_id) { tweet.id }
+    it "ツイートの詳細を取得できる" do
+      subject
+
+      res = JSON.parse(response.body)
+      expect(res["id"]).to eq tweet_id
+      expect(res["content"]).to eq tweet.content
+      expect(res["created_at"]).to be_present
+      expect(res["user"]["id"]).to eq tweet.user.id
+      expect(res.keys).to eq ["id", "content", "created_at", "user"]
+      expect(res["user"].keys).to eq ["id", "name", "avatar"]
+      expect(response).to have_http_status :ok
+    end
+
+    context "存在しないidを指定した時" do
+      let!(:tweet_id) { 1000000 }
+      it "ツイートの詳細を取得できない" do
+        expect{ subject }.to raise_error ActiveRecord::RecordNotFound
+      end
+    end
+  end
+
 end
