@@ -17,7 +17,7 @@ RSpec.describe "Api::V1::Auth::Sessions", type: :request do
     end
 
     context "paramsにemailが存在しなかった時" do
-      let!(:params) { { password: user.password } }
+      let(:params) { { password: user.password } }
       it "ログインできない" do
         subject
 
@@ -29,7 +29,7 @@ RSpec.describe "Api::V1::Auth::Sessions", type: :request do
     end
 
     context "paramsにpasswordが存在しなかった時" do
-      let!(:params) { { email: user.email } }
+      let(:params) { { email: user.email } }
       it "ログインできない" do
         subject
 
@@ -44,12 +44,12 @@ RSpec.describe "Api::V1::Auth::Sessions", type: :request do
   describe "DELETE /api/v1/auth/sign_out" do
     subject { delete(destroy_api_v1_user_session_path, headers: headers) }
 
-    let!(:params) { { email: user.email, password: user.password } }
+    let(:params) { { email: user.email, password: user.password } }
     let!(:user) { create(:user) }
     let!(:headers) { user.create_new_auth_token }
     context "ログイン状態にある時" do
       it "ログアウトできる" do
-        expect{ subject }.to change { user.reload.tokens }.from(be_present).to(be_blank)
+        expect { subject }.to change { user.reload.tokens }.from(be_present).to(be_blank)
 
         expect(response).to have_http_status :ok
       end

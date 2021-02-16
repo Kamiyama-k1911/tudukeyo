@@ -76,3 +76,6 @@ RSpec/ReturnFromStub:
 
 RSpec/AnyInstance:
   Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false

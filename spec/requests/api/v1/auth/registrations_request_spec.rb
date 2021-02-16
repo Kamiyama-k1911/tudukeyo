@@ -25,7 +25,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
     end
 
     context "paramsにnameが存在しなかった時" do
-      let!(:params) { attributes_for(:user, name: nil) }
+      let(:params) { attributes_for(:user, name: nil) }
       it "新規登録できない" do
         expect { subject }.to change { User.count }.by(0)
 
@@ -37,7 +37,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
     end
 
     context "paramsにemailが存在しなかった時" do
-      let!(:params) { attributes_for(:user, email: nil) }
+      let(:params) { attributes_for(:user, email: nil) }
       it "新規登録できない" do
         expect { subject }.to change { User.count }.by(0)
 
@@ -49,7 +49,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
     end
 
     context "paramsにpasswordが存在しなかった時" do
-      let!(:params) { attributes_for(:user, password: nil) }
+      let(:params) { attributes_for(:user, password: nil) }
       it "新規登録できない" do
         expect { subject }.to change { User.count }.by(0)
 

@@ -72,7 +72,6 @@ RSpec.describe "Api::V1::Tweets", type: :request do
         expect(res["errors"][0]).to eq "You need to sign in or sign up before continuing."
         expect(response).to have_http_status :unauthorized
       end
-
     end
 
     context "パラメーターの渡し方が間違っていた時" do
@@ -104,7 +103,7 @@ RSpec.describe "Api::V1::Tweets", type: :request do
     end
 
     context "ログインしていない時" do
-      subject { delete(api_v1_tweet_path(tweet_id))}
+      subject { delete(api_v1_tweet_path(tweet_id)) }
 
       it "ツイートを削除できない" do
         subject
