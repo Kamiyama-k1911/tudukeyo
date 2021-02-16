@@ -1,4 +1,6 @@
 class Api::V1::TweetsController < Api::V1::BaseApiController
+  before_action :authenticate_user!, except: [:index, :show]
+
   def index
     tweets = Tweet.eager_load(:user).all.order(created_at: "DESC")
     render json: tweets

@@ -48,14 +48,13 @@ RSpec.describe "Api::V1::Tweets", type: :request do
   end
 
   describe "POST api/v1/tweets" do
-    subject { post(api_v1_tweets_path(params: params)) }
-
-    before { allow_any_instance_of(Api::V1::BaseApiController).to receive(:current_user).and_return(current_user) }
+    subject { post(api_v1_tweets_path(params: params), headers: headers) }
 
     let!(:params) { { tweet: attributes_for(:tweet) } }
-    let!(:current_user) { create(:user) }
+    let!(:user) { create(:user) }
+    let!(:headers) { user.create_new_auth_token }
     it "ツイートできる" do
-      expect { subject }.to change { Tweet.where(user_id: current_user.id).count }.by(1)
+      expect { subject }.to change { Tweet.where(user_id: user.id).count }.by(1)
 
       res = JSON.parse(response.body)
 
@@ -63,33 +62,57 @@ RSpec.describe "Api::V1::Tweets", type: :request do
       expect(response).to have_http_status :ok
     end
 
+    context "ログインしていない時" do
+      subject { post(api_v1_tweets_path(params: params)) }
+
+      it "ツイートできない" do
+        subject
+        res = JSON.parse(response.body)
+
+        expect(res["errors"][0]).to eq "You need to sign in or sign up before continuing."
+        expect(response).to have_http_status :unauthorized
+      end
+
+    end
+
     context "パラメーターの渡し方が間違っていた時" do
       let(:params) { attributes_for(:tweet) }
 
-      it "ツイートを作成できない" do
+      it "ツイートできない" do
         expect { subject }.to raise_error ActionController::ParameterMissing
       end
     end
   end
 
   describe "DELETE api/v1/tweets/:id" do
-    subject { delete(api_v1_tweet_path(tweet_id)) }
+    subject { delete(api_v1_tweet_path(tweet_id), headers: headers) }
 
-    before { allow_any_instance_of(Api::V1::BaseApiController).to receive(:current_user).and_return(current_user) }
-
-    let!(:tweet) { create(:tweet, user_id: current_user_id) }
+    let!(:tweet) { create(:tweet, user_id: user_id) }
     let!(:tweet_id) { tweet.id }
-    let!(:current_user) { create(:user) }
-    let!(:current_user_id) { current_user.id }
+    let!(:user) { create(:user) }
+    let!(:user_id) { user.id }
+    let!(:headers) { user.create_new_auth_token }
 
     it "ツイートを削除できる" do
-      expect { subject }.to change { Tweet.where(user_id: current_user_id).count }.by(-1)
+      expect { subject }.to change { Tweet.where(user_id: user_id).count }.by(-1)
 
       res = JSON.parse(response.body)
       expect(res["id"]).to eq tweet_id
       expect(res["content"]).to eq tweet.content
       expect(res["created_at"]).to be_present
       expect(response).to have_http_status :ok
+    end
+
+    context "ログインしていない時" do
+      subject { delete(api_v1_tweet_path(tweet_id))}
+
+      it "ツイートを削除できない" do
+        subject
+        res = JSON.parse(response.body)
+
+        expect(res["errors"][0]).to eq "You need to sign in or sign up before continuing."
+        expect(response).to have_http_status :unauthorized
+      end
     end
 
     context "自分以外のユーザーのツイートを削除しようとした時" do
